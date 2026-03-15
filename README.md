@@ -94,9 +94,7 @@ The script will:
 4. Export supplementary tables as CSV in `Resultados/`
 
 ## Authors
-
-- Isabel (first author)
-- Audencio Victor (supervisor)
+- Audencio Victor 
 
 ## License
 
