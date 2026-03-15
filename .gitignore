@@ -9,9 +9,14 @@
 # Large binary files (TIFF figures - PNGs are smaller and sufficient for repo)
 *.tiff
 
-# Word documents (manuscripts - track separately)
-*.docx
+# Word documents (draft manuscripts - track separately)
+Draft*.docx
+RS Isabel*.docx
+RS _Vitamin*.docx
 *.xlsx
+
+# Keep these:
+!Abstract_VitaminD_SR.docx
 
 # Old figure versions and loose TIFFs in Resultados root
 Resultados /figures_v5/
