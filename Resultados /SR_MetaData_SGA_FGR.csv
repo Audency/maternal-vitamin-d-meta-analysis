@@ -1,0 +1,5 @@
+study,year,n,log_or,se_log_or,or,lower,upper,cutoff_nmol,lab,design_cat,inverted,n_exposed,n_ref
+"Miliku et al., 2016",2016,7098,0.7275486072772777,0.20563458972972978,2.07,1.38,3.09,25,HPLC-MS/MS,Prospective Cohort,FALSE,1698,5400
+"Gernand et al., 2014 (50–74 vs <30)",2014,792,0.5621189181535413,0.28025823690513,1.75,1.01,3.03,30,HPLC-MS/MS,Observational,TRUE,198,198
+"Gernand et al., 2014 (≥75 vs <30)",2014,792,0.7765287894989963,0.32853425722108115,2.17,1.15,4.17,30,HPLC-MS/MS,Observational,TRUE,198,198
+"Beck et al., 2025",2025,351,0.24846135929849955,0.6244903298093238,1.28,0.38,4.35,50,HPLC-MS/MS,Cohort,TRUE,175,176

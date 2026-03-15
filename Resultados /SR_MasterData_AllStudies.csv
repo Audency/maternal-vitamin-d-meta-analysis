@@ -1,0 +1,27 @@
+id,author,year,country,continent,design,n,vitd_nmol,vitd_sd,lab,lab_group,vitd_cutoff_nmol,trimester_sample,outcome_cat,sig,effect_type,nos_score,design_cat,nos_cat,vitd_cutoff_group
+D01,Tosun et al.,2025,Turkey,Asia,Prospective Cohort,226,39.43,23.48,CLIA,Immunoassay,50,1st,SGA/FGR,FALSE,p-value only,7,Prospective/Observational Cohort,High (≥7/9),≤ 50 nmol/L
+D02,Miliku et al.,2016,Netherlands,Europe,Prospective Cohort,7098,46.7,83.26,HPLC-MS/MS,Mass Spec,25,any,SGA,TRUE,OR,9,Prospective/Observational Cohort,High (≥7/9),< 25 nmol/L
+D03,Mahon et al.,2010,UK,Europe,Prospective Cohort,424,61,32.59,RIA,Immunoassay,50,any,Bone,TRUE,r (Pearson),8,Prospective/Observational Cohort,High (≥7/9),≤ 50 nmol/L
+D04,Wierzejska et al.,2020,Poland,Europe,Cross-sectional,94,47.5,19.5,CLIA,Immunoassay,50,any,Biometry,FALSE,r (Spearman),5,Cross-sectional,Moderate (5–6/9),≤ 50 nmol/L
+D05,Ioannou et al.,2012,UK,Europe,Cohort,357,63,96.3,RIA,Immunoassay,50,any,Bone,TRUE,r (Pearson),8,Prospective/Observational Cohort,High (≥7/9),≤ 50 nmol/L
+D06,Liu et al.,2020,China,Asia,Cohort,10913,66.4,27,HPLC-MS/MS,Mass Spec,50,any,EFW/Biometry,TRUE,OR,8,Prospective/Observational Cohort,High (≥7/9),≤ 50 nmol/L
+D07,Vafaei et al.,2019,Iran,Asia,RCT,140,46.5,NA,ECL,Immunoassay,50,any,Bone/FL,TRUE,Mean diff (RCT),NA,RCT,RCT (Cochrane RoB),≤ 50 nmol/L
+D08,Lee D.H. et al.,2015,Korea,Asia,Cohort,275,NA,NA,ECLIA,Immunoassay,NA,serial,Biometry,TRUE,GEE / r,7,Prospective/Observational Cohort,High (≥7/9),Not specified
+D09,Beck et al.,2025,USA,America,Cohort,351,68.1,21,HPLC-MS/MS,Mass Spec,50,1st,SGA/Length,TRUE,RR,8,Prospective/Observational Cohort,High (≥7/9),≤ 50 nmol/L
+D10,Srilekha et al.,2021,India,Asia,RCT,100,53.5,NA,CLIA,Immunoassay,50,any,EFW/FL/BPD,TRUE,Mean diff (RCT),NA,RCT,RCT (Cochrane RoB),≤ 50 nmol/L
+D11,Vestergaard et al.,2021,Denmark,Europe,Prospective Cohort,297,79,22,HPLC-MS/MS,Mass Spec,50,serial,SGA/FGR,FALSE,p-value only,7,Prospective/Observational Cohort,High (≥7/9),≤ 50 nmol/L
+D12,Park et al.,2014,Korea,Asia,Prospective Cohort,523,NA,NA,RIA,Immunoassay,25,serial,GDM/biometry,FALSE,OR (GDM only),8,Prospective/Observational Cohort,High (≥7/9),< 25 nmol/L
+D13,Young et al.,2012,USA,America,Prospective Cohort,171,54.7,27.5,RIA,Immunoassay,50,any,Bone/FL,TRUE,Beta (linear),8,Prospective/Observational Cohort,High (≥7/9),≤ 50 nmol/L
+D14,Morales et al.,2015,Spain,Europe,Population Cohort,2358,73.5,28.33,HPLC,Mass Spec,50,any,Biometry/Adiposity,TRUE,OR,8,Prospective/Observational Cohort,High (≥7/9),≤ 50 nmol/L
+D15,Akita et al.,2025,Japan,Asia,Cohort,89,44,NA,CLIA,Immunoassay,50,serial,Adiposity,FALSE,Beta (linear),7,Prospective/Observational Cohort,High (≥7/9),≤ 50 nmol/L
+D16,Ge et al.,2024,China,Asia,Retrospective,300,65,NA,ELISA,Immunoassay,50,any,FGR,TRUE,r (Pearson),5,Retrospective,Moderate (5–6/9),≤ 50 nmol/L
+D17,Lee S.B. et al.,2023,Korea,Asia,Retrospective,1079,45.5,22.5,CLIA,Immunoassay,25,any,Dev delay/SGA,TRUE,aOR,6,Retrospective,Moderate (5–6/9),< 25 nmol/L
+D18,Kwon et al.,2023,Korea,Asia,Cohort,48,NA,NA,CLIA,Immunoassay,50,any,Biometry,TRUE,ANOVA / p-value,6,Prospective/Observational Cohort,Moderate (5–6/9),≤ 50 nmol/L
+D19,Palmrich et al.,2023,Austria,Europe,Prospective Cohort,249,43.6,23.78,CLIA,Immunoassay,50,any,SGA,FALSE,OR (logistic),8,Prospective/Observational Cohort,High (≥7/9),≤ 50 nmol/L
+D20,Mahfod et al.,2022,Egypt,Africa,Case-Control,56,20.78,NA,ECL,Immunoassay,50,any,FGR,TRUE,r (Spearman),6,Case-Control,Moderate (5–6/9),≤ 50 nmol/L
+D21,Marcal et al.,2021,Brazil,America,Cross-sectional,87,60.5,NA,CLIA,Immunoassay,50,any,SGA/FGR,FALSE,ANOVA / p-value,5,Cross-sectional,Moderate (5–6/9),≤ 50 nmol/L
+D22,Baqai et al.,2020,Pakistan,Asia,Prospective Cohort,585,NA,NA,RIA,Immunoassay,75,any,IUGR,FALSE,RR (no CI),5,Prospective/Observational Cohort,Moderate (5–6/9),> 50 nmol/L
+D23,Alimohammadi et al.,2020,Iran,Asia,Case-Control,260,36.85,NA,RIA,Immunoassay,50,any,IUGR,TRUE,OR,6,Case-Control,Moderate (5–6/9),≤ 50 nmol/L
+D24,Judistiani et al.,2019,Indonesia,Asia,Prospective Cohort,203,39.13,17.65,ELISA,Immunoassay,50,3rd,Biometry,TRUE,Beta (linear),7,Prospective/Observational Cohort,High (≥7/9),≤ 50 nmol/L
+D25,Gernand et al.,2014,USA,America,Observational,792,63.9,29.5,HPLC-MS/MS,Mass Spec,30,any,SGA,TRUE,OR,8,Prospective/Observational Cohort,High (≥7/9),≤ 30 nmol/L
+D26,Fernandez-Alonso et al.,2011,Spain,Europe,Cross-sectional,498,68.5,21.85,ECLIA,Immunoassay,50,1st,CRL/NT,FALSE,r (Spearman),5,Cross-sectional,Moderate (5–6/9),≤ 50 nmol/L

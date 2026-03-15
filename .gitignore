@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+
+# R
+.RData
+.Rhistory
+.Rproj.user/
+
+# Large binary files (TIFF figures - PNGs are smaller and sufficient for repo)
+*.tiff
+
+# Word documents (manuscripts - track separately)
+*.docx
+*.xlsx
+
+# Old figure versions and loose TIFFs in Resultados root
+Resultados /figures_v5/
+Resultados /Figure1_*.tiff
+Resultados /Figure1b*.tiff
+Resultados /Figure2_*.tiff
+Resultados /Figure3_*.tiff
+Resultados /Figure4_*.tiff
+Resultados /Figure7_*.tiff
+Resultados /Figure8_*.png
+Resultados /FigS*.tiff
+
+# Articles folder (PDFs)
+Artigos /
+Exemplos para se inspirirar/

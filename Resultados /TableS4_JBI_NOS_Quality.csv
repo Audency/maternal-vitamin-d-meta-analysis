@@ -1,0 +1,25 @@
+id,study,Q1,Q2,Q3,Q4,Q5,Q6,Q7,Q8,Q9,score,nos
+D01,Tosun 2025,Y,Y,Y,Y,Y,Y,Y,Y,U,9,7
+D02,Miliku 2016,Y,Y,Y,Y,Y,Y,Y,Y,Y,11,9
+D03,Mahon 2010,Y,Y,Y,Y,Y,Y,Y,Y,U,9,8
+D04,Wierzejska 2020,Y,Y,Y,Y,U,Y,Y,U,U,6,5
+D05,Ioannou 2012,Y,Y,Y,Y,Y,Y,Y,Y,U,9,8
+D06,Liu 2020,Y,Y,Y,Y,Y,Y,Y,Y,U,9,8
+D08,Lee D.H. 2015,Y,Y,Y,Y,Y,Y,Y,Y,U,9,7
+D09,Beck 2025,Y,Y,Y,Y,Y,Y,Y,Y,Y,11,8
+D11,Vestergaard 2021,Y,Y,Y,Y,Y,Y,Y,Y,U,9,7
+D12,Park 2014,Y,Y,Y,Y,Y,Y,Y,Y,Y,11,8
+D13,Young 2012,Y,Y,Y,Y,Y,Y,Y,Y,Y,11,8
+D14,Morales 2015,Y,Y,Y,Y,Y,Y,Y,Y,Y,11,8
+D15,Akita 2025,Y,Y,Y,Y,Y,Y,Y,Y,Y,11,7
+D16,Ge 2024,Y,N,Y,N,N,Y,Y,N,Y,5,5
+D17,Lee S.B. 2023,Y,Y,Y,U,Y,Y,Y,Y,U,7,6
+D18,Kwon 2023,Y,Y,Y,Y,Y,Y,Y,Y,U,9,6
+D19,Palmrich 2023,Y,Y,Y,Y,Y,Y,Y,Y,Y,11,8
+D20,Mahfod 2022,Y,Y,Y,U,U,Y,Y,N,U,6,6
+D21,Marcal 2021,Y,Y,Y,U,Y,Y,Y,Y,U,7,5
+D22,Baqai 2020,Y,N,N,N,N,Y,Y,N,U,4,5
+D23,Alimohammadi 2020,Y,Y,Y,U,U,Y,Y,N,U,5,6
+D24,Judistiani 2019,Y,Y,Y,Y,Y,Y,Y,Y,U,9,7
+D25,Gernand 2014,Y,Y,Y,Y,Y,Y,Y,Y,Y,11,8
+D26,Fernandez-Alonso 2011,Y,Y,Y,Y,Y,Y,Y,Y,Y,11,5

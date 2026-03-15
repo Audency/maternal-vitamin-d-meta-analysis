@@ -1,0 +1,27 @@
+id,author,year,country,continent,design_cat,n,vitd_nmol,vitd_sd,vitd_cutoff_nmol,lab,nos_score,outcome_cat,sig,effect_type,primary_finding,effect_size,stat_method
+D01,Tosun et al.,2025,Turkey,Asia,Prospective/Observational Cohort,226,39.43,23.48,50,CLIA,7,SGA/FGR,FALSE,p-value only,No sig. association with SGA or FGR,p>0.05,Multivariable logistic regression
+D02,Miliku et al.,2016,Netherlands,Europe,Prospective/Observational Cohort,7098,46.7,83.26,25,HPLC-MS/MS,9,SGA,TRUE,OR,VitD deficiency → SGA; EFW β=0.12 SD,OR=2.07 (1.38–3.09),Longitudinal + logistic regression
+D03,Mahon et al.,2010,UK,Europe,Prospective/Observational Cohort,424,61,32.59,50,RIA,8,Bone,TRUE,r (Pearson),Lower VitD → metaphyseal splaying; no FL effect,r=−0.16,Pearson r; linear regression
+D04,Wierzejska et al.,2020,Poland,Europe,Cross-sectional,94,47.5,19.5,50,CLIA,5,Biometry,FALSE,r (Spearman),No assoc. VitD–femur length,p=0.77,Spearman correlation
+D05,Ioannou et al.,2012,UK,Europe,Prospective/Observational Cohort,357,63,96.3,50,RIA,8,Bone,TRUE,r (Pearson),Higher VitD → greater fetal FV and PMD,r=0.147 (p=0.006),Pearson r; linear regression
+D06,Liu et al.,2020,China,Asia,Prospective/Observational Cohort,10913,66.4,27,50,HPLC-MS/MS,8,EFW/Biometry,TRUE,OR,VitD def → excessive EFW; combined effect with GDM,OR=1.11 (1.02–1.21),Logistic regression; GEE
+D07,Vafaei et al.,2019,Iran,Asia,RCT,140,46.5,NA,50,ECL,NA,Bone/FL,TRUE,Mean diff (RCT),Supplementation → FL +1.98mm; HL +1.39mm,MD FL=1.98mm; HL=1.39mm,Independent t-test
+D08,Lee D.H. et al.,2015,Korea,Asia,Prospective/Observational Cohort,275,NA,NA,NA,ECLIA,7,Biometry,TRUE,GEE / r,ΔVitD correlated with ΔBPD,r=0.14 (p=0.03),GEE
+D09,Beck et al.,2025,USA,America,Prospective/Observational Cohort,351,68.1,21,50,HPLC-MS/MS,8,SGA/Length,TRUE,RR,Each +10 nmol/L → +0.05 z-score length; SGA NS,β=0.05 (0.01–0.10),Mixed-effects; Poisson regression
+D10,Srilekha et al.,2021,India,Asia,RCT,100,53.5,NA,50,CLIA,NA,EFW/FL/BPD,TRUE,Mean diff (RCT),Supplementation → +277g EFW; FL +3.03mm; BPD +4.77mm,MD EFW=277g (p<0.01),t-test; ICC
+D11,Vestergaard et al.,2021,Denmark,Europe,Prospective/Observational Cohort,297,79,22,50,HPLC-MS/MS,7,SGA/FGR,FALSE,p-value only,Insufficient VitD → PAPP-A expression; FGR/SGA NS,p=0.009 PAPP-A; FGR NS,Linear regression
+D12,Park et al.,2014,Korea,Asia,Prospective/Observational Cohort,523,NA,NA,25,RIA,8,GDM/biometry,FALSE,OR (GDM only),VitD not assoc. with GDM or fetal growth,OR<1 all NS,Multivariable logistic regression
+D13,Young et al.,2012,USA,America,Prospective/Observational Cohort,171,54.7,27.5,50,RIA,8,Bone/FL,TRUE,Beta (linear),VitD×Ca interaction → femur z-score,β=0.15 (p<0.05),Multiple linear regression
+D14,Morales et al.,2015,Spain,Europe,Prospective/Observational Cohort,2358,73.5,28.33,50,HPLC,8,Biometry/Adiposity,TRUE,OR,Lower VitD → AC and EFW <10th centile,OR=1.14–1.18 per −10ng/mL,Multivariable regression
+D15,Akita et al.,2025,Japan,Asia,Prospective/Observational Cohort,89,44,NA,50,CLIA,7,Adiposity,FALSE,Beta (linear),VitD not assoc. with fetal adiposity,β NS,Multiple linear regression
+D16,Ge et al.,2024,China,Asia,Retrospective,300,65,NA,50,ELISA,5,FGR,TRUE,r (Pearson),VitD inversely correlated with FGR,r=−0.236 (p<0.001),Logistic + chi-square
+D17,Lee S.B. et al.,2023,Korea,Asia,Retrospective,1079,45.5,22.5,25,CLIA,6,Dev delay/SGA,TRUE,aOR,VitD<10ng/mL → developmental delay aOR=4.28,aOR=4.28 (1.40–13.05),Multivariable analysis
+D18,Kwon et al.,2023,Korea,Asia,Prospective/Observational Cohort,48,NA,NA,50,CLIA,6,Biometry,TRUE,ANOVA / p-value,VitD insufficiency → lower HC and FL,HC p=0.011; FL p<0.001,Kruskal-Wallis
+D19,Palmrich et al.,2023,Austria,Europe,Prospective/Observational Cohort,249,43.6,23.78,50,CLIA,8,SGA,FALSE,OR (logistic),No sig. association VitD–SGA,NS,Logistic regression
+D20,Mahfod et al.,2022,Egypt,Africa,Case-Control,56,20.78,NA,50,ECL,6,FGR,TRUE,r (Spearman),FGR group: VitD correlated with AC and EFW,r=0.376 (p=0.049),Spearman r; logistic regression
+D21,Marcal et al.,2021,Brazil,America,Cross-sectional,87,60.5,NA,50,CLIA,5,SGA/FGR,FALSE,ANOVA / p-value,No difference in VitD across AGA/SGA/FGR groups,p=0.672,Fisher's exact
+D22,Baqai et al.,2020,Pakistan,Asia,Prospective/Observational Cohort,585,NA,NA,75,RIA,5,IUGR,FALSE,RR (no CI),No sig. association VitD–IUGR,RR=0.660 (no CI),Chi-square
+D23,Alimohammadi et al.,2020,Iran,Asia,Case-Control,260,36.85,NA,50,RIA,6,IUGR,TRUE,OR,VitD deficiency: OR=6.81 in IUGR case-control,OR=6.81; insuf.=1.40,Chi-square
+D24,Judistiani et al.,2019,Indonesia,Asia,Prospective/Observational Cohort,203,39.13,17.65,50,ELISA,7,Biometry,TRUE,Beta (linear),VitD assoc. with BPD and AC at 3rd trimester,β=0.141 (p=0.042),Linear regression
+D25,Gernand et al.,2014,USA,America,Prospective/Observational Cohort,792,63.9,29.5,30,HPLC-MS/MS,8,SGA,TRUE,OR,Higher VitD → 43–54% reduced SGA risk,OR=0.57 (0.33–0.99),Log-binomial regression
+D26,Fernandez-Alonso et al.,2011,Spain,Europe,Cross-sectional,498,68.5,21.85,50,ECLIA,5,CRL/NT,FALSE,r (Spearman),VitD not correlated with CRL; weak corr. NT,r²=0.005 NS,Spearman rho

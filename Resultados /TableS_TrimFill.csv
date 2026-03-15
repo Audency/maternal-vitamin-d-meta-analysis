@@ -1,0 +1,5 @@
+Analysis,k,k_imputed,OR,CI_lower,CI_upper
+SGA/FGR,4,0,1.95,1.47,2.59
+SGA/FGR (trim-and-fill),5,1,2.00,1.52,2.63
+Biometry/EFW,4,0,1.16,1.09,1.23
+Biometry/EFW (trim-and-fill),6,2,1.12,1.06,1.18
