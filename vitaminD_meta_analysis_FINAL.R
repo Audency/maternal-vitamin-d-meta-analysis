@@ -1076,7 +1076,7 @@ p1d <- studies %>%
         axis.text.y = element_text(size = 8.5))
 
 fig1 <- (p1a | p1b) / (p1c | p1d) + plot_layout(heights = c(1, 1.1))
-save_fig("StudyCharacteristics", fig1, w = 15, h = 11)
+save_fig("StudyCharacteristics", fig1, w = 16, h = 12)
 
 
 # =============================================================================
@@ -1357,13 +1357,13 @@ jbi_long <- jbi_q %>%
 pS2a <- ggplot(jbi_long, aes(x = question, y = label, fill = response)) +
   geom_tile(colour = "white", linewidth = 0.65) +
   geom_text(aes(label = response), colour = "white", fontface = "bold",
-            size = 2.5) +
+            size = 3.5) +
   scale_fill_manual(values = c("Yes" = "#2E7D32", "No" = "#B5001C",
                                "Unclear" = "#D4631A"), name = NULL) +
   labs(x = "Appraisal item (Q1\u2013Q9)", y = NULL,
        subtitle = "(a)  JBI Critical Appraisal") +
-  theme_lancet(9) +
-  theme(axis.text.y = element_text(size = 7.5), axis.line.y = element_blank(),
+  theme_lancet(12) +
+  theme(axis.text.y = element_text(size = 10), axis.line.y = element_blank(),
         axis.ticks.y = element_blank(), panel.grid = element_blank())
 
 pS2b <- jbi_q %>%
@@ -1371,20 +1371,20 @@ pS2b <- jbi_q %>%
          cat   = ifelse(nos >= 7, "High (NOS\u22657)", "Moderate/Low")) %>%
   ggplot(aes(x = nos, y = label, fill = cat)) +
   geom_col(width = 0.70, colour = "white") +
-  geom_text(aes(label = nos), hjust = -0.2, size = 2.8) +
+  geom_text(aes(label = nos), hjust = -0.2, size = 3.5) +
   geom_vline(xintercept = 7, linetype = "dashed", colour = pal$red,
              linewidth = 0.8) +
-  annotate("text", x = 7.15, y = 1, hjust = 0, size = 2.6,
+  annotate("text", x = 7.15, y = 1, hjust = 0, size = 3.2,
            colour = pal$red, label = "NOS\u22657") +
   scale_fill_manual(values = c("High (NOS\u22657)" = pal$green,
                                "Moderate/Low" = pal$orange), name = NULL) +
   scale_x_continuous(limits = c(0, 12.5)) +
   labs(x = "NOS score (0\u20139)", y = NULL,
        subtitle = "(b)  Newcastle-Ottawa Scale") +
-  theme_lancet(9) +
+  theme_lancet(12) +
   theme(axis.line.y = element_blank(), axis.ticks.y = element_blank(),
-        axis.text.y = element_text(size = 7.5))
-save_fig("Quality_JBI_NOS", pS2a | pS2b, w = 16, h = 11)
+        axis.text.y = element_text(size = 10))
+save_fig("Quality_JBI_NOS", pS2a | pS2b, w = 18, h = 14)
 
 
 # =============================================================================
@@ -1415,8 +1415,8 @@ pS3 <- ggplot(cutoff_sub, aes(y = study, x = or, xmin = lower, xmax = upper)) +
   geom_errorbarh(aes(colour = sig, linewidth = ispool), height = 0.22) +
   geom_point(aes(colour = sig, shape = ispool, size = ispool)) +
   geom_text(aes(x = upper * 1.08,
-                label = sprintf("%.2f (%.2f\u2013%.2f)", or, lower, upper)),
-            hjust = 0, size = 2.9, colour = pal$black) +
+                label = sprintf("%.2f [%.2f\u2013%.2f]", or, lower, upper)),
+            hjust = 0, size = 3.3, colour = pal$black) +
   scale_colour_manual(values = c("TRUE" = pal$navy, "FALSE" = pal$lgrey),
                       guide = "none") +
   scale_linewidth_manual(values = c("TRUE" = 1.2, "FALSE" = 0.85),
@@ -1462,13 +1462,13 @@ pS5a <- narr %>%
   ggplot(aes(x = factor(1), y = fct_rev(short), fill = direction)) +
   geom_tile(colour = "white", linewidth = 0.65) +
   geom_text(aes(label = direction, colour = direction), fontface = "bold",
-            size = 2.65) +
+            size = 3.5) +
   scale_fill_manual(values = dir_col, name = "Association") +
   scale_colour_manual(
     values = c("Significant" = "white", "Partial" = "white",
                "Non-significant" = "grey25"), guide = "none") +
   facet_grid(~"Direction", scales = "free", space = "free") +
-  labs(y = NULL, x = NULL) + theme_lancet(9) +
+  labs(y = NULL, x = NULL) + theme_lancet(12) +
   theme(axis.text.x = element_blank(), axis.ticks = element_blank(),
         panel.grid = element_blank())
 
@@ -1478,7 +1478,7 @@ pS5b <- narr %>%
   geom_tile(colour = "white", linewidth = 0.65) +
   geom_text(aes(label = ifelse(!is.na(nos_score), as.character(nos_score),
                                "RCT"),
-                colour = nos_q), fontface = "bold", size = 2.65) +
+                colour = nos_q), fontface = "bold", size = 3.5) +
   scale_fill_manual(values = c("High" = pal$green, "Moderate" = pal$orange,
                                "Low" = pal$red, "RCT" = pal$navy),
                     name = "Quality") +
@@ -1486,10 +1486,10 @@ pS5b <- narr %>%
                                  "Low" = "white", "RCT" = "white"),
                       guide = "none") +
   facet_grid(~"NOS / RoB", scales = "free", space = "free") +
-  labs(y = NULL, x = NULL) + theme_lancet(9) +
+  labs(y = NULL, x = NULL) + theme_lancet(12) +
   theme(axis.text = element_blank(), axis.ticks = element_blank(),
         panel.grid = element_blank())
-save_fig("Narrative_Synthesis", pS5a | pS5b, w = 10, h = 11)
+save_fig("Narrative_Synthesis", pS5a | pS5b, w = 12, h = 13)
 
 
 # =============================================================================
