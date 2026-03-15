@@ -80,14 +80,81 @@ def insert_figure(filename, caption_text, width_inches=6.5):
     # Caption
     p_cap = doc.add_paragraph()
     p_cap.alignment = WD_ALIGN_PARAGRAPH.LEFT
-    p_cap.paragraph_format.space_before = Pt(4)
-    p_cap.paragraph_format.space_after = Pt(14)
+    p_cap.paragraph_format.space_before = Pt(6)
+    p_cap.paragraph_format.space_after = Pt(16)
     for part_text, part_bold in caption_text:
         r = p_cap.add_run(part_text)
         r.font.size = Pt(11)
         r.font.name = 'Times New Roman'
         r.bold = part_bold
         r.italic = not part_bold
+
+
+def add_table(headers, rows, caption_parts, col_widths=None, font_size=9):
+    """Add a formatted table with caption."""
+    # Caption above table
+    p_cap = doc.add_paragraph()
+    p_cap.paragraph_format.space_before = Pt(12)
+    p_cap.paragraph_format.space_after = Pt(6)
+    for text, bold in caption_parts:
+        r = p_cap.add_run(text)
+        r.font.size = Pt(11)
+        r.font.name = 'Times New Roman'
+        r.bold = bold
+        r.italic = not bold
+
+    ncols = len(headers)
+    nrows = len(rows)
+    table = doc.add_table(rows=nrows + 1, cols=ncols)
+    table.style = 'Table Grid'
+    table.alignment = WD_TABLE_ALIGNMENT.CENTER
+
+    # Set column widths if provided
+    if col_widths:
+        for i, w in enumerate(col_widths):
+            for row in table.rows:
+                row.cells[i].width = Inches(w)
+
+    # Header row - navy background, white bold text
+    for j, h in enumerate(headers):
+        cell = table.rows[0].cells[j]
+        cell.text = ""
+        p = cell.paragraphs[0]
+        r = p.add_run(h)
+        r.font.size = Pt(font_size)
+        r.font.name = 'Times New Roman'
+        r.bold = True
+        r.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+        # Navy background
+        shading = cell._element.get_or_add_tcPr()
+        shd = shading.makeelement(qn('w:shd'), {
+            qn('w:val'): 'clear',
+            qn('w:color'): 'auto',
+            qn('w:fill'): '1A2E4A'
+        })
+        shading.append(shd)
+
+    # Data rows - alternating shading
+    for i, row_data in enumerate(rows):
+        for j, val in enumerate(row_data):
+            cell = table.rows[i + 1].cells[j]
+            cell.text = ""
+            p = cell.paragraphs[0]
+            r = p.add_run(str(val))
+            r.font.size = Pt(font_size)
+            r.font.name = 'Times New Roman'
+            r.font.color.rgb = RGBColor(0x11, 0x11, 0x11)
+            # Zebra striping
+            if i % 2 == 1:
+                shading = cell._element.get_or_add_tcPr()
+                shd = shading.makeelement(qn('w:shd'), {
+                    qn('w:val'): 'clear',
+                    qn('w:color'): 'auto',
+                    qn('w:fill'): 'F5F6F8'
+                })
+                shading.append(shd)
+
+    doc.add_paragraph()  # spacing
 
 
 # =============================================================================
@@ -406,6 +473,47 @@ insert_figure("LabMethods_VitD.png",
       "(b) Maternal 25(OH)D concentrations by continent. "
       "Dashed red line = 50 nmol/L sufficiency threshold.", False)])
 
+# ── Table 1: Characteristics of included studies ─────────────────────────────
+add_table(
+    headers=["ID", "Author, Year", "Country", "Design", "N",
+             "25(OH)D\nnmol/L", "Lab", "Outcome", "Sig.", "NOS"],
+    rows=[
+        ["D01","Tosun, 2025","Turkey","Prospective Cohort","226","39.4","CLIA","SGA/FGR","No","7"],
+        ["D02","Miliku, 2016","Netherlands","Prospective Cohort","7,098","46.7","HPLC-MS/MS","SGA","Yes","9"],
+        ["D03","Mahon, 2010","UK","Prospective Cohort","424","61.0","RIA","Bone","Yes","8"],
+        ["D04","Wierzejska, 2020","Poland","Cross-sectional","94","47.5","CLIA","Biometry","No","5"],
+        ["D05","Ioannou, 2012","UK","Cohort","357","63.0","RIA","Bone","Yes","8"],
+        ["D06","Liu, 2020","China","Cohort","10,913","66.4","HPLC-MS/MS","EFW/Biometry","Yes","8"],
+        ["D07","Vafaei, 2019","Iran","RCT","140","46.5","ECL","Bone/FL","Yes","RCT"],
+        ["D08","Lee D.H., 2015","Korea","Cohort","275","\u2014","ECLIA","Biometry","Yes","7"],
+        ["D09","Beck, 2025","USA","Cohort","351","68.1","HPLC-MS/MS","SGA/Length","Yes","8"],
+        ["D10","Srilekha, 2021","India","RCT","100","53.5","CLIA","EFW/FL/BPD","Yes","RCT"],
+        ["D11","Vestergaard, 2021","Denmark","Prospective Cohort","297","79.0","HPLC-MS/MS","SGA/FGR","No","7"],
+        ["D12","Park, 2014","Korea","Prospective Cohort","523","\u2014","RIA","GDM/biometry","No","8"],
+        ["D13","Young, 2012","USA","Prospective Cohort","171","54.7","RIA","Bone/FL","Yes","8"],
+        ["D14","Morales, 2015","Spain","Population Cohort","2,358","73.5","HPLC","Biometry/Adip.","Yes","8"],
+        ["D15","Akita, 2025","Japan","Cohort","89","44.0","CLIA","Adiposity","No","7"],
+        ["D16","Ge, 2024","China","Retrospective","300","65.0","ELISA","FGR","Yes","5"],
+        ["D17","Lee S.B., 2023","Korea","Retrospective","1,079","45.5","CLIA","Dev delay/SGA","Yes","6"],
+        ["D18","Kwon, 2023","Korea","Cohort","48","\u2014","CLIA","Biometry","Yes","6"],
+        ["D19","Palmrich, 2023","Austria","Prospective Cohort","249","43.6","CLIA","SGA","No","8"],
+        ["D20","Mahfod, 2022","Egypt","Case-Control","56","20.8","ECL","FGR","Yes","6"],
+        ["D21","Marcal, 2021","Brazil","Cross-sectional","87","60.5","CLIA","SGA/FGR","No","5"],
+        ["D22","Baqai, 2020","Pakistan","Prospective Cohort","585","\u2014","RIA","IUGR","No","5"],
+        ["D23","Alimohammadi, 2020","Iran","Case-Control","260","36.9","RIA","IUGR","Yes","6"],
+        ["D24","Judistiani, 2019","Indonesia","Prospective Cohort","203","39.1","ELISA","Biometry","Yes","7"],
+        ["D25","Gernand, 2014","USA","Observational","792","63.9","HPLC-MS/MS","SGA","Yes","8"],
+        ["D26","Fern\u00e1ndez-Alonso, 2011","Spain","Cross-sectional","498","68.5","ECLIA","CRL/NT","No","5"],
+    ],
+    caption_parts=[("Table 1. ", True),
+                   ("Characteristics of the 26 included studies. "
+                    "25(OH)D = mean maternal serum concentration; "
+                    "NOS = Newcastle\u2013Ottawa Scale score (/9); "
+                    "Sig. = statistically significant association; "
+                    "RCT studies assessed with Cochrane RoB 2.", False)],
+    font_size=8
+)
+
 heading("Methodological quality", 2)
 para(
     "Among the 24 observational studies, JBI Critical Appraisal scores ranged from 4 to 11 "
@@ -458,6 +566,24 @@ insert_figure("Forest_SGA_FGR.png",
       "(k = 4; N = 9,033). Fixed-effects model; pooled OR = 1\u00b795 "
       "(95% CI 1\u00b747\u20132\u00b759); I\u00b2 = 0%. "
       "\u2020 Direction inverted to harmonise deficiency as increased risk.", False)])
+
+# ── Table 2: Meta-analysis summary ───────────────────────────────────────────
+add_table(
+    headers=["Analysis", "k", "N", "Pooled OR", "95% CI", "I\u00b2 (%)", "p-het", "Model", "GRADE"],
+    rows=[
+        ["SGA/FGR (primary)", "4", "9,033", "1.95", "1.47\u20132.59", "0.0", "0.853", "Fixed", "Moderate"],
+        ["Biometry/EFW (secondary)", "4", "26,542", "1.16", "1.09\u20131.23", "32.6", "0.217", "Fixed", "High"],
+        ["FL (RCT, MD)", "1", "140", "+1.98 mm", "1.28\u20132.68", "\u2014", "\u2014", "Single", "Moderate"],
+        ["HL (RCT, MD)", "1", "140", "+1.39 mm", "0.72\u20132.06", "\u2014", "\u2014", "Single", "Moderate"],
+        ["EFW (RCT, MD)", "1", "100", "+277 g", "100\u2013454", "\u2014", "\u2014", "Single", "Low"],
+        ["Adiposity", "2", "2,447", "NS", "\u2014", "\u2014", "\u2014", "\u2014", "Low"],
+    ],
+    caption_parts=[("Table 2. ", True),
+                   ("Summary of meta-analysis results. OR = odds ratio; MD = mean difference; "
+                    "CI = confidence interval; GRADE = certainty of evidence. "
+                    "Fixed = fixed-effects (inverse-variance); NS = non-significant.", False)],
+    font_size=9
+)
 
 heading("Sensitivity analyses for SGA/FGR", 2)
 para(
@@ -855,19 +981,105 @@ doc.add_page_break()
 # =============================================================================
 heading("Supplementary Material", 1)
 
-para("Table S1. Data extraction summary for all 26 included studies (see TableS1_DataExtraction.csv).",
-     italic=True)
-para("Table S2. Meta-analysis summary statistics (see TableS2_MetaAnalysisSummary.csv).",
-     italic=True)
-para("Table S3. JBI Critical Appraisal and Newcastle\u2013Ottawa Scale quality scores (see TableS4_JBI_NOS_Quality.csv).",
-     italic=True)
-para("Table S4. Trim-and-fill analysis results (see TableS_TrimFill.csv).",
-     italic=True)
-para("Table S5. Leave-one-out sensitivity analysis results (see SR_LOO_Sensitivity.csv).",
-     italic=True)
+# ── Table S1: Trim-and-Fill ──────────────────────────────────────────────────
+add_table(
+    headers=["Analysis", "k", "k imputed", "OR", "95% CI lower", "95% CI upper"],
+    rows=[
+        ["SGA/FGR", "4", "0", "1.95", "1.47", "2.59"],
+        ["SGA/FGR (trim-and-fill)", "5", "1", "2.00", "1.52", "2.63"],
+        ["Biometry/EFW", "4", "0", "1.16", "1.09", "1.23"],
+        ["Biometry/EFW (trim-and-fill)", "6", "2", "1.12", "1.06", "1.18"],
+    ],
+    caption_parts=[("Table S1. ", True),
+                   ("Duval & Tweedie trim-and-fill analysis. "
+                    "k imputed = number of studies added to achieve funnel symmetry.", False)],
+    font_size=10
+)
+
+# ── Table S2: Leave-One-Out ──────────────────────────────────────────────────
+add_table(
+    headers=["Study excluded", "Pooled OR", "95% CI lower", "95% CI upper"],
+    rows=[
+        ["Miliku et al., 2016", "1.84", "1.24", "2.73"],
+        ["Gernand et al., 2014 (50\u201374 vs <30)", "2.03", "1.46", "2.81"],
+        ["Gernand et al., 2014 (\u226575 vs <30)", "1.90", "1.39", "2.60"],
+        ["Beck et al., 2025", "2.00", "1.49", "2.67"],
+        ["Overall (all included)", "1.95", "1.47", "2.59"],
+    ],
+    caption_parts=[("Table S2. ", True),
+                   ("Leave-one-out sensitivity analysis for SGA/FGR meta-analysis. "
+                    "All estimates remain statistically significant after sequential "
+                    "exclusion of each study.", False)],
+    font_size=10
+)
+
+# ── Table S3: SGA/FGR meta-analysis data ─────────────────────────────────────
+add_table(
+    headers=["Study", "Year", "N", "OR", "95% CI", "Cutoff\n(nmol/L)", "Lab", "Design", "Inverted"],
+    rows=[
+        ["Miliku et al.", "2016", "7,098", "2.07", "1.38\u20133.09", "25", "HPLC-MS/MS", "Prospective", "No"],
+        ["Gernand et al. (50\u201374)", "2014", "792", "1.75", "1.01\u20133.03", "30", "HPLC-MS/MS", "Observational", "Yes"],
+        ["Gernand et al. (\u226575)", "2014", "792", "2.17", "1.15\u20134.17", "30", "HPLC-MS/MS", "Observational", "Yes"],
+        ["Beck et al.", "2025", "351", "1.28", "0.38\u20134.35", "50", "HPLC-MS/MS", "Cohort", "Yes"],
+    ],
+    caption_parts=[("Table S3. ", True),
+                   ("Individual study data for SGA/FGR meta-analysis. "
+                    "Inverted = effect direction harmonised (deficiency \u2192 increased risk).", False)],
+    font_size=9
+)
+
+# ── Table S4: Biometry/EFW meta-analysis data ───────────────────────────────
+add_table(
+    headers=["Study", "Year", "N", "OR", "95% CI", "Outcome", "Lab"],
+    rows=[
+        ["Liu et al.", "2020", "10,913", "1.11", "1.02\u20131.21", "Excessive EFW", "HPLC-MS/MS"],
+        ["Liu et al. (VitD+GDM)", "2020", "10,913", "1.36", "1.15\u20131.62", "EFW (VitD+GDM)", "HPLC-MS/MS"],
+        ["Morales et al. (AC)", "2015", "2,358", "1.14", "1.00\u20131.31", "AC <10th centile", "HPLC"],
+        ["Morales et al. (EFW)", "2015", "2,358", "1.18", "1.03\u20131.36", "EFW <10th centile", "HPLC"],
+    ],
+    caption_parts=[("Table S4. ", True),
+                   ("Individual study data for biometry/EFW meta-analysis.", False)],
+    font_size=9
+)
+
+# ── Table S5: JBI/NOS Quality ────────────────────────────────────────────────
+add_table(
+    headers=["Study", "Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "JBI", "NOS"],
+    rows=[
+        ["Tosun 2025",            "Y","Y","Y","Y","Y","Y","Y","Y","U","9","7"],
+        ["Miliku 2016",           "Y","Y","Y","Y","Y","Y","Y","Y","Y","11","9"],
+        ["Mahon 2010",            "Y","Y","Y","Y","Y","Y","Y","Y","U","9","8"],
+        ["Wierzejska 2020",       "Y","Y","Y","Y","U","Y","Y","U","U","6","5"],
+        ["Ioannou 2012",          "Y","Y","Y","Y","Y","Y","Y","Y","U","9","8"],
+        ["Liu 2020",              "Y","Y","Y","Y","Y","Y","Y","Y","U","9","8"],
+        ["Lee D.H. 2015",         "Y","Y","Y","Y","Y","Y","Y","Y","U","9","7"],
+        ["Beck 2025",             "Y","Y","Y","Y","Y","Y","Y","Y","Y","11","8"],
+        ["Vestergaard 2021",      "Y","Y","Y","Y","Y","Y","Y","Y","U","9","7"],
+        ["Park 2014",             "Y","Y","Y","Y","Y","Y","Y","Y","Y","11","8"],
+        ["Young 2012",            "Y","Y","Y","Y","Y","Y","Y","Y","Y","11","8"],
+        ["Morales 2015",          "Y","Y","Y","Y","Y","Y","Y","Y","Y","11","8"],
+        ["Akita 2025",            "Y","Y","Y","Y","Y","Y","Y","Y","Y","11","7"],
+        ["Ge 2024",               "Y","N","Y","N","N","Y","Y","N","Y","5","5"],
+        ["Lee S.B. 2023",         "Y","Y","Y","U","Y","Y","Y","Y","U","7","6"],
+        ["Kwon 2023",             "Y","Y","Y","Y","Y","Y","Y","Y","U","9","6"],
+        ["Palmrich 2023",         "Y","Y","Y","Y","Y","Y","Y","Y","Y","11","8"],
+        ["Mahfod 2022",           "Y","Y","Y","U","U","Y","Y","N","U","6","6"],
+        ["Marcal 2021",           "Y","Y","Y","U","Y","Y","Y","Y","U","7","5"],
+        ["Baqai 2020",            "Y","N","N","N","N","Y","Y","N","U","4","5"],
+        ["Alimohammadi 2020",     "Y","Y","Y","U","U","Y","Y","N","U","5","6"],
+        ["Judistiani 2019",       "Y","Y","Y","Y","Y","Y","Y","Y","U","9","7"],
+        ["Gernand 2014",          "Y","Y","Y","Y","Y","Y","Y","Y","Y","11","8"],
+        ["Fern\u00e1ndez-Alonso 2011","Y","Y","Y","Y","Y","Y","Y","Y","Y","11","5"],
+    ],
+    caption_parts=[("Table S5. ", True),
+                   ("JBI Critical Appraisal (Q1\u2013Q9) and Newcastle\u2013Ottawa Scale (NOS) "
+                    "quality scores for 24 observational studies. "
+                    "Y = Yes; N = No; U = Unclear. NOS \u2265 7 = high quality.", False)],
+    font_size=8
+)
 
 doc.add_paragraph()
-para("All supplementary data files are available in the online repository:", italic=True)
+para("All supplementary data files are also available at:", italic=True)
 para("https://github.com/Audency/maternal-vitamin-d-meta-analysis", bold=True)
 
 
