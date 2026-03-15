@@ -1124,30 +1124,147 @@ save_fig("LabMethods_VitD", p5a | p5b, w = 14, h = 6.5)
 # SECAO 15: FIGURAS — SENSIBILIDADE LOO E FUNNEL PLOT
 # =============================================================================
 
-# ── Leave-One-Out ────────────────────────────────────────────────────────────
+# ── Leave-One-Out (3-panel style matching other forest plots) ─────────────────
 loo_plot <- loo_results %>%
-  mutate(study = fct_rev(factor(study, levels = study)),
-         type  = ifelse(study == "Overall", "Overall", "LOO"))
+  mutate(
+    y     = n() - row_number() + 1,
+    type  = ifelse(study == "Overall", "Overall", "LOO"),
+    or_lab = sprintf("%.2f [%.2f\u2013%.2f]", or, lower, upper)
+  )
+k_loo <- nrow(loo_plot)
+ylim_loo <- c(-0.8, k_loo + 1.6)
 
-pS1 <- ggplot(loo_plot, aes(y = study, x = or, xmin = lower, xmax = upper,
-                            colour = type)) +
-  geom_vline(xintercept = 1, colour = "grey25", linewidth = 0.45) +
+# Left panel: study labels
+p_loo_left <- ggplot(loo_plot, aes(y = y)) +
+  {
+    rects <- list()
+    for (i in seq_len(k_loo))
+      if (i %% 2 == 1)
+        rects[[length(rects) + 1]] <- annotate(
+          "rect", xmin = -Inf, xmax = Inf,
+          ymin = loo_plot$y[i] - 0.45, ymax = loo_plot$y[i] + 0.45,
+          fill = "#F5F6F8", colour = NA)
+    rects
+  } +
+  annotate("text", x = 0, y = k_loo + 1.0, label = "Study excluded",
+           hjust = 0, size = 4.0, fontface = "bold", colour = "#111111") +
+  annotate("segment", x = -0.05, xend = 1.05,
+           y = k_loo + 0.60, yend = k_loo + 0.60,
+           colour = "#333333", linewidth = 0.6) +
+  annotate("segment", x = -0.05, xend = 1.05,
+           y = loo_plot$y[k_loo] - 0.60, yend = loo_plot$y[k_loo] - 0.60,
+           colour = "#333333", linewidth = 0.4) +
+  geom_text(data = loo_plot %>% filter(type == "LOO"),
+            aes(x = 0, label = study), hjust = 0, size = 3.5,
+            colour = "#111111") +
+  geom_text(data = loo_plot %>% filter(type == "Overall"),
+            aes(x = 0, label = study), hjust = 0, size = 3.8,
+            fontface = "bold", colour = pal$navy) +
+  scale_x_continuous(limits = c(-0.05, 1.05), expand = c(0, 0)) +
+  coord_cartesian(ylim = ylim_loo, clip = "off") +
+  theme_void(base_size = 11) +
+  theme(plot.background = element_rect(fill = "white", colour = NA),
+        panel.background = element_rect(fill = "white", colour = NA),
+        plot.margin = margin(0, 2, 0, 2))
+
+# Center panel: forest plot
+p_loo_mid <- ggplot(loo_plot, aes(y = y)) +
+  {
+    rects <- list()
+    for (i in seq_len(k_loo))
+      if (i %% 2 == 1)
+        rects[[length(rects) + 1]] <- annotate(
+          "rect", xmin = -Inf, xmax = Inf,
+          ymin = loo_plot$y[i] - 0.45, ymax = loo_plot$y[i] + 0.45,
+          fill = "#F5F6F8", colour = NA)
+    rects
+  } +
+  geom_vline(xintercept = 1, colour = "#444444", linewidth = 0.55) +
   geom_vline(xintercept = p_sga$or, linetype = "dashed",
-             colour = pal$navy, linewidth = 0.8, alpha = 0.55) +
-  geom_errorbarh(height = 0.22, linewidth = 0.9) +
-  geom_point(shape = 22, size = 3.8, fill = "white", stroke = 1.8) +
-  geom_text(aes(label = sprintf("OR=%.2f (%.2f\u2013%.2f)", or, lower, upper)),
-            hjust = -0.12, size = 3.0, colour = pal$black) +
-  scale_colour_manual(values = c("Overall" = pal$navy, "LOO" = pal$mid),
-                      guide = "none") +
-  scale_x_log10(breaks = c(0.8, 1, 1.25, 1.5, 2, 2.5, 3)) +
-  coord_cartesian(xlim = c(0.7, 6)) +
-  labs(x = "Pooled odds ratio (log scale)", y = NULL,
-       subtitle = sprintf("Dashed = overall estimate  |  OR=%.2f (%.2f\u2013%.2f)",
-                          p_sga$or, p_sga$lo, p_sga$hi),
-       caption = "All leave-one-out estimates remain statistically significant.") +
-  theme_lancet()
-save_fig("LOO_Sensitivity", pS1, w = 12, h = 5)
+             colour = pal$navy, linewidth = 0.7, alpha = 0.5) +
+  annotate("segment", x = 0.7, xend = 4,
+           y = k_loo + 0.60, yend = k_loo + 0.60,
+           colour = "#333333", linewidth = 0.6) +
+  annotate("segment", x = 0.7, xend = 4,
+           y = loo_plot$y[k_loo] - 0.60, yend = loo_plot$y[k_loo] - 0.60,
+           colour = "#333333", linewidth = 0.4) +
+  geom_errorbarh(data = loo_plot %>% filter(type == "LOO"),
+                 aes(xmin = lower, xmax = upper),
+                 height = 0.2, linewidth = 0.9, colour = pal$mid) +
+  geom_point(data = loo_plot %>% filter(type == "LOO"),
+             aes(x = or), shape = 22, size = 4, fill = "white",
+             colour = pal$mid, stroke = 1.5) +
+  geom_errorbarh(data = loo_plot %>% filter(type == "Overall"),
+                 aes(xmin = lower, xmax = upper),
+                 height = 0.25, linewidth = 1.1, colour = pal$navy) +
+  geom_point(data = loo_plot %>% filter(type == "Overall"),
+             aes(x = or), shape = 18, size = 5, colour = pal$navy) +
+  scale_x_log10(breaks = c(0.8, 1, 1.5, 2, 2.5, 3)) +
+  coord_cartesian(xlim = c(0.7, 4), ylim = ylim_loo, clip = "off") +
+  labs(x = "Pooled OR (log scale)") +
+  theme_bw(base_size = 11) +
+  theme(
+    panel.background = element_rect(fill = "white", colour = NA),
+    plot.background  = element_rect(fill = "white", colour = NA),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor   = element_blank(),
+    panel.grid.major.x = element_line(colour = "grey92", linewidth = 0.3,
+                                      linetype = "dashed"),
+    panel.border     = element_blank(),
+    axis.line.x      = element_line(colour = "grey50", linewidth = 0.4),
+    axis.ticks.y     = element_blank(),
+    axis.text.y      = element_blank(),
+    axis.title.y     = element_blank(),
+    axis.title.x     = element_text(size = 10, face = "bold", colour = "#111111",
+                                    margin = margin(t = 5)),
+    axis.text.x      = element_text(size = 9, colour = "#111111"),
+    plot.margin      = margin(0, 4, 0, 4)
+  )
+
+# Right panel: OR values
+p_loo_right <- ggplot(loo_plot, aes(y = y)) +
+  {
+    rects <- list()
+    for (i in seq_len(k_loo))
+      if (i %% 2 == 1)
+        rects[[length(rects) + 1]] <- annotate(
+          "rect", xmin = -Inf, xmax = Inf,
+          ymin = loo_plot$y[i] - 0.45, ymax = loo_plot$y[i] + 0.45,
+          fill = "#F5F6F8", colour = NA)
+    rects
+  } +
+  annotate("text", x = 0.5, y = k_loo + 1.0, label = "OR [95% CI]",
+           hjust = 0.5, size = 4.0, fontface = "bold", colour = "#111111") +
+  annotate("segment", x = -0.05, xend = 1.05,
+           y = k_loo + 0.60, yend = k_loo + 0.60,
+           colour = "#333333", linewidth = 0.6) +
+  annotate("segment", x = -0.05, xend = 1.05,
+           y = loo_plot$y[k_loo] - 0.60, yend = loo_plot$y[k_loo] - 0.60,
+           colour = "#333333", linewidth = 0.4) +
+  geom_text(data = loo_plot %>% filter(type == "LOO"),
+            aes(x = 0.5, label = or_lab), hjust = 0.5, size = 3.5,
+            colour = "#111111") +
+  geom_text(data = loo_plot %>% filter(type == "Overall"),
+            aes(x = 0.5, label = or_lab), hjust = 0.5, size = 3.8,
+            fontface = "bold", colour = pal$navy) +
+  scale_x_continuous(limits = c(-0.05, 1.05), expand = c(0, 0)) +
+  coord_cartesian(ylim = ylim_loo, clip = "off") +
+  theme_void(base_size = 11) +
+  theme(plot.background = element_rect(fill = "white", colour = NA),
+        panel.background = element_rect(fill = "white", colour = NA),
+        plot.margin = margin(0, 2, 0, 2))
+
+pS1_final <- p_loo_left + p_loo_mid + p_loo_right +
+  plot_layout(widths = c(0.35, 0.35, 0.30)) +
+  plot_annotation(
+    caption = sprintf("Dashed line = overall pooled estimate (OR = %.2f). All LOO estimates remain significant.",
+                      p_sga$or),
+    theme = theme(
+      plot.caption = element_text(
+        colour = "#666666", size = 9, hjust = 0,
+        face = "italic", lineheight = 1.3, margin = margin(t = 8)),
+      plot.background = element_rect(fill = "white", colour = NA)))
+save_fig("LOO_Sensitivity", pS1_final, w = 14, h = 5)
 
 # ── Funnel plot (Trim-and-Fill) ──────────────────────────────────────────────
 se_max   <- max(meta_sga$se_log_or) * 1.25
