@@ -11,6 +11,9 @@ from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.oxml.ns import qn
 import os, re
 
+FIG_DIR = os.path.expanduser(
+    "~/Desktop/AUDENCIO/Producao artigos/Artigo RS Isabel Vitamina D /Resultados /figures_v6/")
+
 doc = Document()
 
 # ── Page setup ───────────────────────────────────────────────────────────────
@@ -64,6 +67,27 @@ def para_mixed(parts, indent=False):
         run.bold = bold
         run.italic = italic
     return p
+
+
+def insert_figure(filename, caption_text, width_inches=6.5):
+    """Insert a figure with centered image and italic caption below."""
+    img_path = os.path.join(FIG_DIR, filename)
+    if os.path.exists(img_path):
+        p_img = doc.add_paragraph()
+        p_img.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        run = p_img.add_run()
+        run.add_picture(img_path, width=Inches(width_inches))
+    # Caption
+    p_cap = doc.add_paragraph()
+    p_cap.alignment = WD_ALIGN_PARAGRAPH.LEFT
+    p_cap.paragraph_format.space_before = Pt(4)
+    p_cap.paragraph_format.space_after = Pt(14)
+    for part_text, part_bold in caption_text:
+        r = p_cap.add_run(part_text)
+        r.font.size = Pt(10)
+        r.font.name = 'Times New Roman'
+        r.bold = part_bold
+        r.italic = not part_bold
 
 
 # =============================================================================
@@ -362,6 +386,20 @@ para(
     indent=True
 )
 
+# ── Figure 1: Study Characteristics ──────────────────────────────────────────
+insert_figure("StudyCharacteristics.png",
+    [("Figure 1. ", True),
+     ("Characteristics of included studies (k = 26): (a) study design, "
+      "(b) publication timeline, (c) geographic distribution, "
+      "(d) methodological quality (NOS).", False)])
+
+# ── Figure S8: Lab Methods ───────────────────────────────────────────────────
+insert_figure("LabMethods_VitD.png",
+    [("Figure S9. ", True),
+     ("(a) Laboratory methods for 25(OH)D quantification across studies. "
+      "(b) Maternal 25(OH)D concentrations by continent. "
+      "Dashed red line = 50 nmol/L sufficiency threshold.", False)])
+
 heading("Methodological quality", 2)
 para(
     "Among the 24 observational studies, JBI Critical Appraisal scores ranged from 4 to 11 "
@@ -379,6 +417,14 @@ para(
     "assessor blinding, and unclear allocation concealment.",
     indent=True
 )
+
+# ── Figure S1: Quality JBI + NOS ─────────────────────────────────────────────
+insert_figure("Quality_JBI_NOS.png",
+    [("Figure S1. ", True),
+     ("Methodological quality assessment. (a) JBI Critical Appraisal heatmap "
+      "(Q1\u2013Q9) for 24 observational studies. (b) Newcastle\u2013Ottawa Scale "
+      "scores. Dashed red line = NOS \u2265 7 (high quality threshold).", False)],
+    width_inches=6.5)
 
 heading("Primary meta-analysis: SGA/FGR", 2)
 para(
@@ -398,6 +444,14 @@ para(
     "case of SGA/FGR would be expected compared with vitamin D-sufficient pregnancies.",
     indent=True
 )
+
+# ── Figure 2: Forest SGA/FGR ────────────────────────────────────────────────
+insert_figure("Forest_SGA_FGR.png",
+    [("Figure 2. ", True),
+     ("Forest plot: association between maternal vitamin D deficiency and SGA/FGR "
+      "(k = 4; N = 9,033). Fixed-effects model; pooled OR = 1\u00b795 "
+      "(95% CI 1\u00b747\u20132\u00b759); I\u00b2 = 0%. "
+      "\u2020 Direction inverted to harmonise deficiency as increased risk.", False)])
 
 heading("Sensitivity analyses for SGA/FGR", 2)
 para(
@@ -423,6 +477,20 @@ para(
     indent=True
 )
 
+# ── Figure S2: LOO Sensitivity ───────────────────────────────────────────────
+insert_figure("LOO_Sensitivity.png",
+    [("Figure S2. ", True),
+     ("Leave-one-out sensitivity analysis for SGA/FGR. All estimates remain "
+      "statistically significant. Dashed line = overall pooled estimate.", False)],
+    width_inches=5.5)
+
+# ── Figure S3: Cutoff Subgroup ───────────────────────────────────────────────
+insert_figure("Cutoff_Subgroup.png",
+    [("Figure S3. ", True),
+     ("Subgroup forest plot by vitamin D deficiency threshold. "
+      "All subgroups directionally consistent.", False)],
+    width_inches=5.5)
+
 heading("Secondary meta-analysis: fetal biometry and EFW", 2)
 para(
     "Four study estimates from two independent cohorts (Liu et al., 2020 [two strata]; "
@@ -444,6 +512,13 @@ para(
     indent=True
 )
 
+# ── Figure 3: Forest Biometry/EFW ───────────────────────────────────────────
+insert_figure("Forest_Biometry_EFW.png",
+    [("Figure 3. ", True),
+     ("Forest plot: association between maternal vitamin D deficiency and fetal "
+      "biometry/EFW (k = 4; N = 26,542). Fixed-effects model; pooled OR = 1\u00b716 "
+      "(95% CI 1\u00b709\u20131\u00b723); I\u00b2 = 33%.", False)])
+
 heading("RCT continuous outcomes", 2)
 para(
     "Two RCTs reported continuous fetal biometry outcomes with vitamin D supplementation "
@@ -462,6 +537,12 @@ para(
     indent=True
 )
 
+# ── Figure 4: Forest RCT MD ─────────────────────────────────────────────────
+insert_figure("Forest_RCT_MD.png",
+    [("Figure 4. ", True),
+     ("Forest plot: RCT continuous outcomes (mean difference). Green = Vafaei 2019 "
+      "(low RoB); blue = Srilekha 2021 (high RoB). *** p < 0\u00b7001.", False)])
+
 heading("Publication bias", 2)
 para(
     "Egger\u2019s linear regression test could not be reliably performed for the SGA/FGR "
@@ -472,6 +553,13 @@ para(
     "trim-and-fill analysis also imputed no studies, and the adjusted estimate remained "
     "unchanged."
 )
+
+# ── Figure S4: Funnel Plot ───────────────────────────────────────────────────
+insert_figure("Funnel_TrimFill.png",
+    [("Figure S4. ", True),
+     ("Funnel plot with Duval & Tweedie trim-and-fill analysis for SGA/FGR. "
+      "Navy squares = observed studies. Orange dotted = adjusted estimate.", False)],
+    width_inches=4.5)
 
 heading("Narrative synthesis of remaining studies", 2)
 para(
@@ -501,6 +589,32 @@ para(
     "(single study), low for EFW/BPD from the high risk-of-bias RCT, and low for fetal "
     "adiposity (imprecision and limited data)."
 )
+
+# ── Figure S5: GRADE ─────────────────────────────────────────────────────────
+insert_figure("GRADE_Profile.png",
+    [("Figure S5. ", True),
+     ("GRADE evidence profile: certainty of evidence by outcome. "
+      "High (green), Moderate (navy), Low (orange).", False)],
+    width_inches=5.0)
+
+# ── Figure S7: Narrative Synthesis ───────────────────────────────────────────
+insert_figure("Narrative_Synthesis.png",
+    [("Figure S7. ", True),
+     ("Narrative synthesis heatmap: direction of association and quality "
+      "assessment (NOS/RoB) for all 26 studies.", False)],
+    width_inches=5.0)
+
+# ── Figure S6: Bubble Plot ───────────────────────────────────────────────────
+insert_figure("BubblePlot.png",
+    [("Figure S6. ", True),
+     ("Bubble plot: mean maternal 25(OH)D (nmol/L) vs sample size. "
+      "Dashed red line = 50 nmol/L sufficiency threshold.", False)])
+
+# ── Figure S10: Outcomes & Cutoffs ───────────────────────────────────────────
+insert_figure("Outcome_CutoffSummary.png",
+    [("Figure S10. ", True),
+     ("(a) Outcome categories by significance. "
+      "(b) Vitamin D deficiency threshold distribution across studies.", False)])
 
 doc.add_page_break()
 
